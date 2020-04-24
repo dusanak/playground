@@ -33,6 +33,7 @@ public:
 };
 
 std::shared_ptr<Message> readLine(FILE * file) {
+    //TODO
     return std::make_shared<Message>();
 }
 
