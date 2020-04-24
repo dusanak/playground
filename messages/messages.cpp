@@ -10,10 +10,22 @@ public:
     int number;
     std::string text;
 
-    Message(Message& message): 
+    Message() {}
+    ~Message() {}
+
+    Message(const Message& message): 
         control_char(message.control_char), 
         number(message.number),
         text(message.text) {}
+    Message& operator=(const Message& message) {
+    if (this != &message) {
+        control_char = message.control_char;
+        number = message.number;
+        text = message.text;
+    }
+
+    return *this;
+    }
 
     void lineToMessage(std::string line) {
         //TODO
