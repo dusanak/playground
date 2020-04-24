@@ -5,12 +5,19 @@
 
 
 class Message {
+public:
     char control_char;
     int number;
     std::string text;
-public:
-    Message() {}
-    void lineToMessage();
+
+    Message(Message& message): 
+        control_char(message.control_char), 
+        number(message.number),
+        text(message.text) {}
+
+    void lineToMessage(std::string line) {
+        //TODO
+    }
 };
 
 std::shared_ptr<Message> readLine(FILE * file) {
@@ -27,8 +34,6 @@ void readFile(FILE * file, std::vector<std::shared_ptr<Message>>& messages, std:
         message_mutex.unlock();
     }
 }
-
-
 
 int main (int argc, char * argv[]) {
     std::vector<std::shared_ptr<std::thread>> threads;
