@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <mutex>
 #include <thread>
 
 
@@ -12,17 +13,28 @@ public:
     void lineToMessage();
 };
 
-void readFile(FILE * file, const std::vector<std::shared_ptr<Message>>& messages) {
-    std::cout << "test" << std::endl;
+std::shared_ptr<Message> readLine(FILE * file) {
+    return std::make_shared<Message>();
 }
 
-Message readLine() {
-    return Message();
+void readFile(FILE * file, std::vector<std::shared_ptr<Message>>& messages, std::mutex& message_mutex) {
+    while(true){
+        //TODO nejak upravit podminku cyklu
+        std::shared_ptr<Message> message = readLine(file);
+
+        message_mutex.lock();
+        messages.push_back(message);
+        message_mutex.unlock();
+    }
 }
+
+
 
 int main (int argc, char * argv[]) {
     std::vector<std::shared_ptr<std::thread>> threads;
     std::vector<FILE *> files;
+
+    std::mutex message_mutex;
     std::vector<std::shared_ptr<Message>> messages;
 
     auto f1 = fopen("test1.txt", "r");
@@ -33,7 +45,7 @@ int main (int argc, char * argv[]) {
 
     
     for (auto file: files) {
-        threads.push_back(std::make_shared<std::thread>(readFile, file, ref(messages)));
+        threads.push_back(std::make_shared<std::thread>(readFile, file, ref(messages), ref(message_mutex)));
     }
 
 
