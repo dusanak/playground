@@ -41,10 +41,7 @@ fn main() {
         width: 30,
         height: 50,
     };
-    let rect2 = Rectangle {
-        width: 10,
-        height: 40,
-    };
+    let rect2 = Rectangle::square(30);
     let rect3 = Rectangle {
         width: 60,
         height: 45,
