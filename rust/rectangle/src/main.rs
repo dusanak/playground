@@ -25,6 +25,11 @@ impl Rectangle {
             width: size
         }
     }
+
+    fn resize(&mut self, height: u32, width: u32) {
+        self.height = height;
+        self.width = width;
+    }
 }
 
 fn main() {
@@ -48,6 +53,10 @@ fn main() {
     };
 
     println!("Can rect1 hold rect2? {}", rect1.can_hold(&rect2));
+    println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
+
+    let mut rect3 = rect3;
+    rect3.resize(20, 15);
     println!("Can rect1 hold rect3? {}", rect1.can_hold(&rect3));
 }
 
